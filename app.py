@@ -12,12 +12,11 @@ class simpleTextEditor:
         self.text_area.pack(expand=True, fill="both")
 
     def open_file(self):
-        file = filedialog.askopenfile(
-            parent=root, mode="rb", title="Select a file")
-        if file != None:
-            contents = file.read()
-            self.text_area.insert("1.0", contents)
-            file.close()
+        file = filedialog.askopenfile()
+        if file:
+            self.text_area.delete(1.0, tk.END)
+            with open(file.name, "r") as f:
+                self.text_area.insert(1.0, f.read())
 
     def quit_confirm(self):
         if messagebox.askokcancel("Exit", "Do you want to quit?"):
